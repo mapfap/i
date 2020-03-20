@@ -1,0 +1,32 @@
+spring:
+  profiles: default
+  main:
+    banner-mode: off
+  datasource:
+    url: jdbc:h2:mem:local
+    username: sa
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: create
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+#hibernate:
+#  cache:
+#    use_second_level_cache: true
+#    region:
+#      factory_class: org.hibernate.cache.ehcache.EhCacheRegionFactory
+logging:
+  level:
+    com:
+      code:
+        i: INFO
+    org:
+      hibernate:
+        SQL: DEBUG
+#        type:
+#          descriptor:
+#            sql:
+#              BasicBinder: TRACE
