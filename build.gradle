@@ -2,6 +2,7 @@ plugins {
 	id 'org.springframework.boot' version '2.2.5.RELEASE'
 	id 'io.spring.dependency-management' version '1.0.9.RELEASE'
 	id 'java'
+	id 'org.flywaydb.flyway' version '6.3.1'
 }
 
 group = 'com.code'
@@ -24,6 +25,9 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	compileOnly 'org.projectlombok:lombok'
 	runtimeOnly 'com.h2database:h2'
+
+	compileOnly "org.springframework.boot:spring-boot-configuration-processor"
+
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation('org.springframework.boot:spring-boot-starter-test') {
 		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
@@ -32,4 +36,9 @@ dependencies {
 
 test {
 	useJUnitPlatform()
+}
+
+flyway {
+	url = 'jdbc:h2:file:./target/local-h2'
+	user = 'sa'
 }
