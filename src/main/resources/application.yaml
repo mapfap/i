@@ -13,6 +13,26 @@ spring:
     console:
       enabled: true
       path: /h2-console
+  mvc:
+    throw-exception-if-no-handler-found: true
+#    static-path-pattern: /static
+  resources:
+    add-mappings: false
+info:
+  build: N/A
+management:
+  endpoint:
+    health:
+      show-components: ALWAYS
+    restart:
+      enabled: true
+    beans:
+      cache:
+        time-to-live: 10s
+  endpoints:
+    web:
+      exposure:
+        include: 'health,info,metrics'
 javax:
   persistent:
     schema-generation:
@@ -20,7 +40,11 @@ javax:
       scripts:
         action: create
         create-target: ./create.sql
-
+server:
+  tomcat:
+    max-threads: 10
+    accept-count: 100
+    max-connections: 1000
 #hibernate:
 #  cache:
 #    use_second_level_cache: true
@@ -34,6 +58,10 @@ logging:
     org:
       hibernate:
         SQL: DEBUG
+      springframework:
+        web:
+          servlet:
+            PageNotFound: ERROR
 #        type:
 #          descriptor:
 #            sql:
