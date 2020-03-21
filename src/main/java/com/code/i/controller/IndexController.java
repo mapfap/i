@@ -18,4 +18,10 @@ public class IndexController {
         return STATUS;
     }
 
+    @GetMapping("favicon.ico")
+    String favicon() {
+        return "";
+    }
+
+
 }

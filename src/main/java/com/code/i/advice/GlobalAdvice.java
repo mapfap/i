@@ -28,33 +28,28 @@ public class GlobalAdvice extends ResponseEntityExceptionHandler {
 
     @Override
     protected ResponseEntity<Object> handleHttpMessageNotReadable(HttpMessageNotReadableException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
-        String responseMessage = "malformed JSON request";
         log.error("HTTP400 thrown to client ", ex);
-        return buildResponseEntity(new ApiError(HttpStatus.BAD_REQUEST, responseMessage, ex));
+        return buildResponseEntity(new ApiError(HttpStatus.BAD_REQUEST, "malformed JSON request"));
     }
-
 
     @ExceptionHandler(value = { Exception.class })
     protected ResponseEntity<Object> handle(Exception ex, WebRequest request) {
-        String responseMessage = "something went wrong";
         log.error("HTTP500 thrown to client ", ex);
-        return buildResponseEntity(new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, responseMessage, ex));
+        return buildResponseEntity(new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "something went wrong"));
     }
 
     @Override
     protected ResponseEntity<Object> handleNoHandlerFoundException(NoHandlerFoundException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
-        String responseMessage = "not found";
         logger.info("HTTP404 " + ex.getHttpMethod() + " " + ex.getRequestURL());
-        return buildResponseEntity(new ApiError(HttpStatus.NOT_FOUND, responseMessage, ex));
+        return buildResponseEntity(new ApiError(HttpStatus.NOT_FOUND, "not found"));
     }
-
 
     @ExceptionHandler({ ConstraintViolationException.class })
     public ResponseEntity<Object> handleConstraintViolation(ConstraintViolationException ex, WebRequest request) {
         List<String> errors = new ArrayList<String>();
         String responseMessage = ex.getConstraintViolations().stream().map(violation -> violation.getRootBeanClass().getName() + " " + violation.getPropertyPath() + ": " + violation.getMessage()).reduce(" ", (a, b) -> a + ":" + b);
         logger.info("HTTP400 " + responseMessage);
-        return buildResponseEntity(new ApiError(HttpStatus.BAD_REQUEST, responseMessage, ex));
+        return buildResponseEntity(new ApiError(HttpStatus.BAD_REQUEST, responseMessage));
     }
 
 //    @ExceptionHandler(value = { AccessDeniedException.class })

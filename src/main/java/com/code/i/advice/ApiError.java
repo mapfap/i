@@ -10,11 +10,10 @@ import java.time.Instant;
 class ApiError {
 
     private HttpStatus status;
-//    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss")
     private Instant timestamp;
     private String message;
 
-    ApiError(HttpStatus status, String message, Throwable ex) {
+    ApiError(HttpStatus status, String message) {
         this.status = status;
         this.message = message;
         timestamp = Instant.now();
